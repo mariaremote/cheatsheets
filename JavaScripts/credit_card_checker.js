@@ -7,19 +7,27 @@
 // take the sum of all these numbers and modulo by 10
 // if there is a remainder the result is false (ie. card number is not valid)
 
-const validateCred = (array) => {
-  let sum = array[array.length];
-  for (let i = array.length - 1; i > 0; i=-2) {
-    // if (i % 2 === 0) {
-      let doubled = array[i - 1] * 2;
+// 1st approach.. got too complicated..
+const validateCred1 = (array) => {
+  // last value gets added to the sum as it is
+  let sum = array[array.length-1];
+  // iterating backwards starting from the 2nd last position
+  for (let i = array.length-2; i >= 0; i--) {
+console.log(`index ${i}: ${array[i]}`);
+    // only for even indexes the math is applied
+    if (i % 2 === 0) {
+      let doubled = array[i] * 2;
       if (doubled >= 9) {
         sum += doubled - 9;
       } else {
         sum += doubled;
       }
-    // } else {
-    //   sum += array[i];
-    // }
+    } 
+    // odd indexes are simply added as is
+    else {
+      sum += array[i];
+    } 
+console.log(`new sum ${sum}`)
   }
   if (sum % 10 === 0) {
     return true;
@@ -27,6 +35,16 @@ const validateCred = (array) => {
     return false;
   }
 };
+
+// 2nd approach.. (after hint from Codecademy)
+const validateCred = array => {
+  // copy the array, remove last digit and add it to the sum
+  // reverse copied array so the 2nd last digit is now the first
+  // implement math logic for all even indexes starting from 0 
+  // doubled values are added to sum
+  // non-math numbers are added to sum
+}
+
 // All valid credit card numbers
 const valid1 = [4, 5, 3, 9, 6, 7, 7, 9, 0, 8, 0, 1, 6, 8, 0, 8];
 const valid2 = [5, 5, 3, 5, 7, 6, 6, 7, 6, 8, 7, 5, 1, 4, 3, 9];
@@ -47,7 +65,6 @@ const mystery2 = [5, 4, 6, 6, 1, 0, 0, 8, 6, 1, 6, 2, 0, 2, 3, 9];
 const mystery3 = [6, 0, 1, 1, 3, 7, 7, 0, 2, 0, 9, 6, 2, 6, 5, 6, 2, 0, 3];
 const mystery4 = [4, 9, 2, 9, 8, 7, 7, 1, 6, 9, 2, 1, 7, 0, 9, 3];
 const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3];
-const mystery6 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3];
 
 // An array of all the arrays above
 const batch = [
@@ -68,4 +85,6 @@ const batch = [
     mystery5,
 ];
 
-console.log(validateCred(valid2));
+console.log(validateCred(valid3));
+console.log(`invalid3`)
+console.log(validateCred(invalid3));
