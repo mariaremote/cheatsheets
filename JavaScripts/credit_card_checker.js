@@ -36,15 +36,14 @@ console.log(`new sum ${sum}`)
   }
 };
 
-// 2nd approach.. (after hint from Codecademy)
-const validateCred = array => {
+const summarizeCreditCard = array => {
   // copy the array, remove last digit and add it to the sum
   // reverse copied array so the 2nd last digit is now the first
-  let newArray = array.slice(0,-1).toReversed()
-  let sum = array[array.length-1]
+  let newArray = array.slice(0, -1).toReversed()
+  let sum = array[array.length - 1]
   // implement math logic for all even indexes starting from 0 
   newArray.forEach((value, index, array) => {
-    if (index % 2 === 0){
+    if (index % 2 === 0) {
       let doubled = value * 2;
       if (doubled >= 9) {
         sum += doubled - 9;
@@ -57,7 +56,12 @@ const validateCred = array => {
       sum += value;
     }
   })
-  if (sum % 10 === 0) {
+  return sum;
+}
+
+// 2nd approach.. (after hint from Codecademy)
+const validateCred = array => {
+  if (summarizeCreditCard(array) % 10 === 0) {
     return true;
   } else {
     return false;
@@ -103,6 +107,19 @@ const convertStringToNumbers = (string) => {
 }
 
 // TODO: create function that can create valid creditcard numbers
+const convertInvalidToValid = (array) => {
+  let remainder = summarizeCreditCard(array) % 10;
+  console.log('array:',array,'remainder:',remainder);
+  let lastDigit = array[array.length - 1];
+  console.log(lastDigit);
+  if (remainder >= 5) {
+    lastDigit -= remainder; 
+  }
+  else if (remainder < 5){
+    lastDigit -= remainder; 
+  }
+  return array;
+}
 
 // All valid credit card numbers
 const valid1 = [4, 5, 3, 9, 6, 7, 7, 9, 0, 8, 0, 1, 6, 8, 0, 8];
@@ -144,22 +161,32 @@ const batch = [
     mystery5,
 ];
 
-console.log(`~~ valids ~~`)
-console.log(validateCred(valid1));
-console.log(validateCred(valid2));
-console.log(validateCred(valid3));
-console.log(validateCred(valid4));
-console.log(validateCred(valid5));
-console.log(`~~ invalids ~~`)
-console.log(validateCred(invalid1));
-console.log(validateCred(invalid2));
-console.log(validateCred(invalid3));
-console.log(validateCred(invalid4));
-console.log(validateCred(invalid5));
+// console.log(`~~ valids ~~`)
+// console.log(validateCred(valid1));
+// console.log(validateCred(valid2));
+// console.log(validateCred(valid3));
+// console.log(validateCred(valid4));
+// console.log(validateCred(valid5));
+// console.log(`~~ invalids ~~`)
+// console.log(validateCred(invalid1));
+// console.log(validateCred(invalid2));
+// console.log(validateCred(invalid3));
+// console.log(validateCred(invalid4));
+// console.log(validateCred(invalid5));
 
-console.log(findInvalidCards(batch));
-console.log(idInvalidCardCompanies(batch)); //looks like MasterCard is not affected ;)
+// console.log(validateCred(valid5));
+// console.log(validateCred(convertInvalidToValid(invalid1)));
+// console.log(validateCred(convertInvalidToValid(invalid2)));
+// console.log(validateCred(convertInvalidToValid(invalid3)));
+// console.log(validateCred(convertInvalidToValid(invalid4)));
+// console.log(validateCred(convertInvalidToValid(invalid5)));
+
+console.log(convertInvalidToValid(invalid5));
+
+
+// console.log(findInvalidCards(batch));
+// console.log(idInvalidCardCompanies(batch)); //looks like MasterCard is not affected ;)
 // check if your card is valid or not: (letters are ignored)
 let myCard = "34682786hh245685oooo"
-console.log(convertStringToNumbers(myCard));
-console.log(validateCred(convertStringToNumbers(myCard)));
+// console.log(convertStringToNumbers(myCard));
+// console.log(validateCred(convertStringToNumbers(myCard)));
