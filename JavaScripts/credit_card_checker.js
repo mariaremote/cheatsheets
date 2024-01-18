@@ -7,6 +7,30 @@
 // take the sum of all these numbers and modulo by 10
 // if there is a remainder the result is false (ie. card number is not valid)
 
+// abstraction of summing up card numbers
+const summarizeCreditCard = array => {
+  // copy the array, remove last digit and add it to the sum
+  // reverse copied array so the 2nd last digit is now the first
+  let newArray = array.slice(0, -1).toReversed()
+  let sum = array[array.length - 1]
+  // implement math logic for all even indexes starting from 0 
+  newArray.forEach((value, index, array) => {
+    if (index % 2 === 0) {
+      let doubled = value * 2;
+      if (doubled >= 9) {
+        sum += doubled - 9;
+      } else {
+        sum += doubled;
+      }
+    }
+    // odd indexes are simply added as is
+    else {
+      sum += value;
+    }
+  })
+  return sum;
+}
+
 // 1st approach.. got too complicated.. DISCARDED
 const validateCred1 = (array) => {
   // last value gets added to the sum as it is
@@ -35,29 +59,6 @@ console.log(`new sum ${sum}`)
     return false;
   }
 };
-
-const summarizeCreditCard = array => {
-  // copy the array, remove last digit and add it to the sum
-  // reverse copied array so the 2nd last digit is now the first
-  let newArray = array.slice(0, -1).toReversed()
-  let sum = array[array.length - 1]
-  // implement math logic for all even indexes starting from 0 
-  newArray.forEach((value, index, array) => {
-    if (index % 2 === 0) {
-      let doubled = value * 2;
-      if (doubled >= 9) {
-        sum += doubled - 9;
-      } else {
-        sum += doubled;
-      }
-    }
-    // odd indexes are simply added as is
-    else {
-      sum += value;
-    }
-  })
-  return sum;
-}
 
 // 2nd approach.. (after hint from Codecademy)
 const validateCred = array => {
@@ -106,17 +107,15 @@ const convertStringToNumbers = (string) => {
   return output;
 }
 
-// TODO: create function that can create valid creditcard numbers
+// function that can creates valid creditcard numbers
+// the remainder is distributed to the last digit (returns altered last digit)
 const convertInvalidToValid = (array) => {
   let remainder = summarizeCreditCard(array) % 10;
-  console.log('array:',array,'remainder:',remainder);
-  let lastDigit = array[array.length - 1];
-  console.log(lastDigit);
-  if (remainder >= 5) {
-    lastDigit -= remainder; 
+  if (remainder > 5) {
+    array[array.length - 1] += (10-remainder); 
   }
-  else if (remainder < 5){
-    lastDigit -= remainder; 
+  else if (remainder <= 5){
+    array[array.length - 1] -= remainder; 
   }
   return array;
 }
@@ -161,32 +160,32 @@ const batch = [
     mystery5,
 ];
 
-// console.log(`~~ valids ~~`)
-// console.log(validateCred(valid1));
-// console.log(validateCred(valid2));
-// console.log(validateCred(valid3));
-// console.log(validateCred(valid4));
-// console.log(validateCred(valid5));
-// console.log(`~~ invalids ~~`)
-// console.log(validateCred(invalid1));
-// console.log(validateCred(invalid2));
-// console.log(validateCred(invalid3));
-// console.log(validateCred(invalid4));
-// console.log(validateCred(invalid5));
+// TESTS
 
-// console.log(validateCred(valid5));
-// console.log(validateCred(convertInvalidToValid(invalid1)));
-// console.log(validateCred(convertInvalidToValid(invalid2)));
-// console.log(validateCred(convertInvalidToValid(invalid3)));
-// console.log(validateCred(convertInvalidToValid(invalid4)));
-// console.log(validateCred(convertInvalidToValid(invalid5)));
+console.log(`should return true:`)
+console.log(validateCred(valid1));
+console.log(validateCred(valid2));
+console.log(validateCred(valid3));
+console.log(validateCred(valid4));
+console.log(validateCred(valid5));
+console.log(`should return false:`)
+console.log(validateCred(invalid1));
+console.log(validateCred(invalid2));
+console.log(validateCred(invalid3));
+console.log(validateCred(invalid4));
+console.log(validateCred(invalid5));
 
-console.log(convertInvalidToValid(invalid5));
+console.log(`should return true:`);
+console.log(validateCred(convertInvalidToValid(mystery1)));
+console.log(validateCred(convertInvalidToValid(mystery3)));
+console.log(validateCred(convertInvalidToValid(mystery4))); // returns credit card number with -1 :( 
 
-
-// console.log(findInvalidCards(batch));
-// console.log(idInvalidCardCompanies(batch)); //looks like MasterCard is not affected ;)
+console.log(`should return ['Visa','Amex','Discover']`)
+console.log(idInvalidCardCompanies(batch)); //looks like MasterCard is not affected ;)
 // check if your card is valid or not: (letters are ignored)
 let myCard = "34682786hh245685oooo"
-// console.log(convertStringToNumbers(myCard));
-// console.log(validateCred(convertStringToNumbers(myCard)));
+console.log(`should return array of only numbers:`)
+console.log(convertStringToNumbers(myCard));
+
+console.log(`should return true if you entered your real credit number in variable myCard:`);
+console.log(validateCred(convertStringToNumbers(myCard)));
