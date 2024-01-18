@@ -95,7 +95,9 @@ const idInvalidCardCompanies = (nestedArray) => {
 const convertStringToNumbers = (string) => {
   let output = [];
   for (let i = 0; i < string.length; i++){
-    output.push(Number(string.charAt(i)));    
+    let digit = string.charAt(i);
+    if (parseInt(digit)){
+    output.push(parseInt(digit)); }  
   }
   return output;
 }
@@ -157,7 +159,7 @@ console.log(validateCred(invalid5));
 
 console.log(findInvalidCards(batch));
 console.log(idInvalidCardCompanies(batch)); //looks like MasterCard is not affected ;)
-console.log(convertStringToNumbers("2345678"));
-// check if your card is valid or not:
-let myCard = "34682786245685"
+// check if your card is valid or not: (letters are ignored)
+let myCard = "34682786hh245685oooo"
+console.log(convertStringToNumbers(myCard));
 console.log(validateCred(convertStringToNumbers(myCard)));
