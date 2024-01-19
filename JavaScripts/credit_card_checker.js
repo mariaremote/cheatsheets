@@ -1,20 +1,26 @@
-// use the Luhn Algorithm to check if a credit card number is valid
-// https://en.wikipedia.org/wiki/Luhn_algorithm#Description
+/**
+Checks that a credit card number (a string of numbers) is valid via
+the Luhn Algorithm (https://en.wikipedia.org/wiki/Luhn_algorithm#Description)
+using a slightly modified version.
 
-// take every 2nd number from the array (from right to left) and double it
-// last number remains untouched
-// if the value is greater than 9, subtract 9
-// take the sum of all these numbers and modulo by 10
-// if there is a remainder the result is false (ie. card number is not valid)
+The last digit is the checkDigit. The remaining digits are called the payload.
+Remove the checkDigit and reverse the payload in order so that the 2nd last digit is now the first. 
+Iterating over the reversed payload and doubling every 2nd digit. 
+e.g. [3,4,3,5] becomes [3,8,3,10]
+If any doubled number is greater than 10, subtract 9 from it. 
+Sum all of those digits. e.g. [3,8,3,1] => 3 + 8 + 3 + 1 = 15
+The checkDigit is added to the sum and the total modulo by 10. 
+If there is no remainder, the credit card number is valid. 
+**/
 
-// abstraction of summing up card numbers
-const summarizeCreditCard = array => {
-  // copy the array, remove last digit and add it to the sum
-  // reverse copied array so the 2nd last digit is now the first
-  let newArray = array.slice(0, -1).toReversed()
-  let sum = array[array.length - 1]
-  // implement math logic for all even indexes starting from 0 
-  newArray.forEach((value, index, array) => {
+// Step 1: Get sum of credit card number
+const summarizeCreditCard = creditCard => {
+  // checkDigit is added to sum as it is
+  // reverse the payload array so the 2nd last digit is now the first
+  let payload = creditCard.slice(0, -1).toReversed()
+  let sum = creditCard[creditCard.length - 1]
+  // Iterating over the reversed payload and doubling every 2nd digit. 
+  payload.forEach((value, index) => {
     if (index % 2 === 0) {
       let doubled = value * 2;
       if (doubled >= 9) {
@@ -31,48 +37,39 @@ const summarizeCreditCard = array => {
   return sum;
 }
 
-// 1st approach.. got too complicated.. DISCARDED
-const validateCred1 = (array) => {
-  // last value gets added to the sum as it is
-  let sum = array[array.length-1];
-  // iterating backwards starting from the 2nd last position
-  for (let i = array.length-2; i >= 0; i--) {
-console.log(`index ${i}: ${array[i]}`);
-    // only for even indexes the math is applied
-    if (i % 2 === 0) {
-      let doubled = array[i] * 2;
-      if (doubled >= 9) {
-        sum += doubled - 9;
-      } else {
-        sum += doubled;
-      }
-    } 
-    // odd indexes are simply added as is
-    else {
-      sum += array[i];
-    } 
-console.log(`new sum ${sum}`)
-  }
-  if (sum % 10 === 0) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-// 2nd approach.. (after hint from Codecademy)
-const validateCred = array => {
-  if (summarizeCreditCard(array) % 10 === 0) {
+// Step 2: Check if sum of all numbers (including checkDigit is divisible by 10)
+const validateCreditCard = creditCard => {
+  if (summarizeCreditCard(creditCard) % 10 === 0) {
     return true;
   } else {
     return false;
   }
 }
 
-// The role of findInvalidCards() is to check through the nested array for which numbers are invalid, and return another nested array of invalid cards.
-const findInvalidCards = (nestedArray) => {
-  return nestedArray.filter((array)=> validateCred(array) === false)
-} // TODO: is there a way to return the variable names only? 
+// The role of findInvalidCards() is to check through the nested array for which numbers are invalid
+// and return another nested array of invalid cards.
+const findInvalidCards = (listOfCreditCards) => {
+  return listOfCreditCards.filter((creditCard) => validateCreditCard(creditCard) === false)
+}
+
+const companiesData = [ // list of objects
+  {
+    name: 'Amex',
+    cardPrefix: 3
+  },
+  {
+    name: 'Visa',
+    cardPrefix: 4
+  },
+  {
+    name: 'MasterCard',
+    cardPrefix: 5
+  },
+  {
+    name: 'Discover',
+    cardPrefix: 6
+  }
+]
 
 // based on first number will return name of card company of affected invalid credit card numbers
 const idInvalidCardCompanies = (nestedArray) => {
@@ -96,6 +93,7 @@ const idInvalidCardCompanies = (nestedArray) => {
   }
   return affectedCompanies;
 }
+
 // takes a creditcard number typed as string and return array of integers
 const convertStringToNumbers = (string) => {
   let output = [];
@@ -163,29 +161,36 @@ const batch = [
 // TESTS
 
 console.log(`should return true:`)
-console.log(validateCred(valid1));
-console.log(validateCred(valid2));
-console.log(validateCred(valid3));
-console.log(validateCred(valid4));
-console.log(validateCred(valid5));
+console.log(validateCreditCard(valid1));
+console.log(validateCreditCard(valid2));
+console.log(validateCreditCard(valid3));
+console.log(validateCreditCard(valid4));
+console.log(validateCreditCard(valid5));
 console.log(`should return false:`)
-console.log(validateCred(invalid1));
-console.log(validateCred(invalid2));
-console.log(validateCred(invalid3));
-console.log(validateCred(invalid4));
-console.log(validateCred(invalid5));
+console.log(validateCreditCard(invalid1));
+console.log(validateCreditCard(invalid2));
+console.log(validateCreditCard(invalid3));
+console.log(validateCreditCard(invalid4));
+console.log(validateCreditCard(invalid5));
+
+console.log(`mysteries`)
+console.log(validateCreditCard(mystery1));
+console.log(validateCreditCard(mystery2));
+console.log(validateCreditCard(mystery3));
+console.log(validateCreditCard(mystery4));
+console.log(validateCreditCard(mystery5));
 
 console.log(`should return true:`);
-console.log(validateCred(convertInvalidToValid(mystery1)));
-console.log(validateCred(convertInvalidToValid(mystery3)));
-console.log(validateCred(convertInvalidToValid(mystery4))); // returns credit card number with -1 :( 
+console.log(validateCreditCard(convertInvalidToValid(mystery1)));
+console.log(validateCreditCard(convertInvalidToValid(mystery3)));
+console.log(validateCreditCard(convertInvalidToValid(mystery4)));
 
 console.log(`should return ['Visa','Amex','Discover']`)
-console.log(idInvalidCardCompanies(batch)); //looks like MasterCard is not affected ;)
+console.log(idInvalidCardCompanies(batch));
 // check if your card is valid or not: (letters are ignored)
 let myCard = "34682786hh245685oooo"
 console.log(`should return array of only numbers:`)
 console.log(convertStringToNumbers(myCard));
 
 console.log(`should return true if you entered your real credit number in variable myCard:`);
-console.log(validateCred(convertStringToNumbers(myCard)));
+console.log(validateCreditCard(convertStringToNumbers(myCard)));
