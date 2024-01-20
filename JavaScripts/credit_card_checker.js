@@ -71,6 +71,26 @@ const companiesData = [ // list of objects
   }
 ]
 
+/* Attempt to improve
+
+// companiesData.map DO  if (batch.some RETURNs true) return companiesData[i].name
+
+console.log(
+  companiesData.map(
+    (element) => { if (element.name === 'Amex') { return [... new Set(element.name)] } }
+
+  )
+)
+
+let affectedCompanies = batch.some((element) => {
+  if (element[0] === companiesData.forEach((element) => element.cardPrefix)) {
+    return element.name
+  }
+});
+// console.log(`Companies affected: `, affectedCompanies)
+// console.log(`Visa: `,companiesData[1].cardPrefix)
+*/
+
 // based on first number will return name of card company of affected invalid credit card numbers
 const idInvalidCardCompanies = (nestedArray) => {
   let invalidCards = findInvalidCards(nestedArray);
