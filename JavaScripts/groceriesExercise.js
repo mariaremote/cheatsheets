@@ -15,7 +15,9 @@ const groceries = arrayOfObjects => {
             } return newString;
         } 
     );
-    if (arrayOfObjects.length > 1){
+    if (!arrayOfObjects || arrayOfObjects.length === 0) {
+        return "";}
+    else if (arrayOfObjects.length > 1){
     newArray.splice(newArray.length-1,0,'and');}
     return newArray.join(' ');
 }
@@ -28,3 +30,6 @@ console.log(groceries( [{item: 'Bread'}, {item: 'Butter'}] ));
 
 console.log(groceries( [{item: 'Cheese Balls'}] ));
 // returns 'Cheese Balls'
+
+console.log(groceries([{}]));
+// returns empty string
