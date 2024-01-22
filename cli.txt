@@ -76,7 +76,10 @@ export FLASK_APP=hello.py               tell flask which file to run (default is
 
 ## GIT ##
 
+git init                                initializes new project to git
+git diff [FILENAME]                     shows differences before staged
 git add .                               adds all files to the staging area
+git add [FILENAME]
 git status                              shows currently staged files
 git commit -m ["commit message"]        commits staged files with message
 git checkout -b [branch_name]           creates a new branch and goes into it
@@ -91,6 +94,13 @@ git pull origin main                    pulls the remote origin (main) into the 
 git config --global user.email          view email associated with GIT
 git config --global user.email [noreply email from git] sets new default email
 git commit --amend --reset-author       resets email from previous commit
+git show HEAD                           shows most recent commit (what is currently being pointed at)
+git checkout HEAD [FILENAME]            reverting to file before changes made (if it wasn't staged yet!)
+git reset HEAD [FILENAME]               reverting to file before changes made (after it was staged)
+git checkout -- [FILENAME]              discards the changes from the staging area
+git reset [COMMIT_SHA]                  goes back to that version after that commit was made
+
+
 change github remote after changing nickname
 git remote set-url origin https://github.com/mariaremote/cheatsheets.git
 
