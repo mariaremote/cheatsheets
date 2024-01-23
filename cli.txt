@@ -82,6 +82,21 @@ git add .                               adds all files to the staging area
 git add [FILENAME]
 git status                              shows currently staged files
 git commit -m ["commit message"]        commits staged files with message
+git commit --amend                      updates previous commit (replaces the whole commit)
+git commit --amend --no-edit            to keep the same commit message
+git commit --amend --reset-author       resets email from previous commit
+git show HEAD                           shows most recent commit (what is currently being pointed at)
+git checkout HEAD [FILENAME]            reverting to file before changes made (if it wasn't staged yet!)
+git reset HEAD [FILENAME]               reverting to file before changes made (after it was staged) 
+                                        removes file from staging but does not remove changes! (use the checkout HEAD for that!)
+git checkout -- [FILENAME]              discards the changes from the staging area
+git reset [COMMIT_SHA]                  goes back to that version after that commit was made
+git stash                               stores current changes in a hidden stash so you can switch to other branch / HEAD
+git stash list                          shows stash
+git stash pop                           retrieves the stash back to the working directory so you can commit it whenever you are ready
+git log                                 view commit history
+
+git checkout [branch_name]              changes into branch
 git checkout -b [branch_name]           creates a new branch and goes into it
 git branch                              shows all local branches
 git branch --show-current               shows current working branch
@@ -89,16 +104,13 @@ git branch -r                           shows all remote branches
 git branch -a                           shows all branches, remote and local
 git branch -D [branch_name]             deletes branch
 git push origin [branch_name]           pushes commits to origin from [branch]
-git checkout [branch_name]              changes into branch
 git pull origin main                    pulls the remote origin (main) into the local main branch
+git fetch --prune                       syncs remote branches with local
+
 git config --global user.email          view email associated with GIT
 git config --global user.email [noreply email from git] sets new default email
-git commit --amend --reset-author       resets email from previous commit
-git show HEAD                           shows most recent commit (what is currently being pointed at)
-git checkout HEAD [FILENAME]            reverting to file before changes made (if it wasn't staged yet!)
-git reset HEAD [FILENAME]               reverting to file before changes made (after it was staged)
-git checkout -- [FILENAME]              discards the changes from the staging area
-git reset [COMMIT_SHA]                  goes back to that version after that commit was made
+git config --global alias.glop "log --pretty=format:"%h %s" --graph"          creates alias "glop" -> type git glop for "git log --pretty=format:"%h %s" --graph"
+
 
 
 change github remote after changing nickname
