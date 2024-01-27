@@ -103,6 +103,8 @@ git branch --show-current               shows current working branch
 git branch -r                           shows all remote branches
 git branch -a                           shows all branches, remote and local
 git branch -D [branch_name]             deletes branch
+
+git remote -v                           views remote origin for current project
 git push origin [branch_name]           pushes commits to origin from [branch]
 git pull origin main                    pulls the remote origin (main) into the local main branch
 git fetch --prune                       syncs remote branches with local
