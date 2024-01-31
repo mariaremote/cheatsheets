@@ -13,17 +13,30 @@ The .onclick property can add interactivity to a DOM element based on a click ev
 
 // SELECTORS //
 
-// returns the first element that matches (for example class attribute)
-document.querySelector('.class-attribute')
 // returns element based on its id
-document.getElementById('unique')
-// returns array of all elements with class="container"
+document.getElementById('unique') // is faster than querySelector
+// returns collections of all elements with that class (need to convert to array to use array methods on them)
+document.getElementsByClassName("visible")
+
+// querySelector uses CSS selectors syntax!
+// returns the first element that matches (for example class attribute)
+document.querySelector('.class-attribute') // gets the class
+document.querySelector("#unique") // gets the id
+// returns array of all elements with class="container" 
 document.querySelectorAll('.container')
 
+// closest moves upwards! (opposite to querySelector) apply to a child element
+childOne.closest('.id-grandparent')
+// gets the sibling element to the right (down)
+childOne.nextElementSibling
+// gets the sibling element to the left (up)
+childTwo.previousElementSibling
+
+
 // Content & Text of HTML elements
-document.getElementById('something').innerHTML 
-document.getElementById('something').innerText
-document.getElementById('something').textContent
+document.getElementById('something').innerHTML // dangerous, because renders <tags/> and attributes!
+document.getElementById('something').innerText // text content that is visible, i.e. displays the text the way it would in the browser
+document.getElementById('something').textContent // shows all raw text content
 
 // PARENTS & CHILDREN //
 
@@ -39,6 +52,15 @@ newAttraction.id = 'vespa';
 newAttraction.innerHTML = 'Rent a Vespa';
 // append them in the DOM
 document.getElementById('italy-attractions').appendChild(newAttraction);
+/*
+What's difference between append and appendChild?
+Element.append() allows you to also append string objects, 
+whereas Node.appendChild() only accepts Node objects. 
+Element.append() has no return value, 
+whereas Node.appendChild() returns the appended Node object. 
+Element.append() can append several nodes and strings, 
+whereas Node.appendChild() can only append one node.
+*/
 
 // removes specified child
 const elementToRemove = document.getElementById('vespa');
