@@ -71,6 +71,16 @@ document.getElementById('sign').hidden = true;
 
 // EVENTS //
 
+// eventListener (can add several events)
+
+let eventTarget = document.getElementById('targetElement');
+eventTarget.addEventListener('click', function () { // eventListener takes two arguments: event name as string and the eventHandler as function
+    // eventHandler: this block of code will run when click event happens on eventTarget element
+}); // best practice: do not use anonymous functions though
+
+
+// .onEvent properties //
+
 // .onclick
 
 // function declared inside
@@ -86,5 +96,25 @@ function turnButtonRed() {
 }
 element.onclick = turnButtonRed;
 
+// .onkeypress
+eventTarget.onkeypress = eventHandlerFunction; 
+// same as:
+eventTarget.addEventListener('keypress',eventHandlerFunction)
 
+// Event Object Properties
+// JavaScript stores events as Event objects with their related data and functionalities as properties and methods.
+// When an event is triggered, the event object can be passed as an argument to the event handler function.
+
+function eventHandlerFunction(event) {
+    console.log(event.timeStamp); // number of milliseconds that passed since the document loaded and the event was triggered
+    console.log(event.target); // reference to the element the event is registered too
+    console.log(event.type); // name of the event
+}
+eventTarget.addEventListener('click', eventHandlerFunction);
+
+// abstracted way to apply to any element (using the event.target property)
+let sharePhoto = function (event) {
+    event.target.style.display = 'none';
+}
+element.addEventListener('click', sharePhoto);
 
