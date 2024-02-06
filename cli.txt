@@ -15,6 +15,7 @@ python hello.py > output.txt                runs hello.py script and creates out
 python hello.py >> output.txt               runs hello.py script and adds output to end in file output.txt
 grep [word]                                 global regex print, searches for word an prints its findings
 history                                     shows history of commands
+history | grep [KEYWORD]                    filters command histroy for keyword
 python                                      opens the python interactive mode
 python --version                           checks installed version of Python
 pip list (-v)                               lists globally installed Python packages (when done in venv will list venv packages) / -v shows with location
@@ -28,6 +29,11 @@ cat glaciers.txt >> rivers.txt              >> takes the standard output of the 
 cat < lakes.txt                             < takes the standard input from the file on the right and inputs it into the program on the left
 cat volcanoes.txt | wc                      | takes the standard output of the command on the left, and pipes it as standard input to the command on the right. You can think of this as “command to command” redirection
 cp ada_lovelace.txt historical/             cp copies files or directories. Here, we copy the file ada_lovelace.txt and place it in the historical/ directory
+
+man [COMMAND]                               manual for this command
+npm install --help                          help for this particular command
+PROGRAM [COMMAND] -h
+top / htop                                  Linux Task Manager
 
 generate SSH Key
 mkdir .ssh/                                 create hidden ssh directory (in user path)
@@ -95,19 +101,27 @@ git stash                               stores current changes in a hidden stash
 git stash list                          shows stash
 git stash pop                           retrieves the stash back to the working directory so you can commit it whenever you are ready
 git log                                 view commit history
+git reflog                              view direction history
 
 git checkout [branch_name]              changes into branch
 git checkout -b [branch_name]           creates a new branch and goes into it
+git checkout -b [new_branch] [from remote_branch]       creates new branch locally to fetch remote branch same name
+git fetch
 git branch                              shows all local branches
 git branch --show-current               shows current working branch
 git branch -r                           shows all remote branches
 git branch -a                           shows all branches, remote and local
-git branch -D [branch_name]             deletes branch
+git branch -D [branch_name]             force deletes branch (kills commits and changes)
+git branch --delete [branch_name]       deletes branch without killing commits
+git branch :[branch_name]               colon means delete
 
 git remote -v                           views remote origin for current project
 git push origin [branch_name]           pushes commits to origin from [branch]
 git pull origin main                    pulls the remote origin (main) into the local main branch
 git fetch --prune                       syncs remote branches with local
+
+git reset --hard [branch_name]          discards all commits and restores branch before changes
+git reset --soft HEAD^                  goes back to commit before head, undo commit but changes are still staged
 
 git config --global user.email          view email associated with GIT
 git config --global user.email [noreply email from git] sets new default email
