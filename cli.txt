@@ -114,6 +114,7 @@ git branch -a                           shows all branches, remote and local
 git branch -D [branch_name]             force deletes branch (kills commits and changes)
 git branch --delete [branch_name]       deletes branch without killing commits
 git branch :[branch_name]               colon means delete
+git push origin :[branch_name]          deletes remote branch
 
 git remote -v                           views remote origin for current project
 git push origin [branch_name]           pushes commits to origin from [branch]
