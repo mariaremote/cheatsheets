@@ -71,17 +71,17 @@ const mockUpStrand = () => {
 };
 
 // TASK 1: factory function to create bacteria DNA
-function pAequorFactory(specimenNum, DNAStrand) {
+function pAequorFactory(specimenNum, dnaStrand) {
     return {
-        specimenNum: specimenNum,
-        dna: DNAStrand(),
+        specimenNum,
+        dna: dnaStrand,
         // TASK 2: method to simulate mutation
         mutate() {
             // gets random index from DNA
-            let randomIndex = Math.floor(Math.random() * 15);
+            const randomIndex = Math.floor(Math.random() * 15);
             console.log(`randomIndex: `, randomIndex);
             // which base is it
-            let targetBase = this.dna[randomIndex];
+            const targetBase = this.dna[randomIndex];
             console.log(`targetBase: `, targetBase);
             // gets random base for mutation
             let mutation;
@@ -105,14 +105,14 @@ function pAequorFactory(specimenNum, DNAStrand) {
                     count++;
                 }
             });
-            let percentageOverlap = ((count / this.dna.length) * 100).toFixed(2);
+            const percentageOverlap = ((count / this.dna.length) * 100).toFixed(2);
             console.log(`specimen #${this.specimenNum} and specimen #${otherBacteria.specimenNum
                 } have ${percentageOverlap}% DNA in common.`);
             return percentageOverlap;
         },
-        // TASK 4: if either C or G accounts for 60% of the DNA will return true
+        // TASK 4: if C and G accounts for 60% of the DNA will return true
         willLikelySurvive() {
-            // counts all C and G bases and returns true if either is 60%
+            // counts all C and G bases and returns true if both sum up to 60%
             let countC = 0;
             let countG = 0;
             this.dna.forEach((base) => {
@@ -126,46 +126,53 @@ function pAequorFactory(specimenNum, DNAStrand) {
             let percentageC = (countC / this.dna.length) * 100;
             let percentageG = (countG / this.dna.length) * 100;
             // console.log(`%C: ${percentageC}, %G: ${percentageG}`)
-            if (percentageC >= 60 || percentageG >= 60) {
-                return true;
-            } else {
-                return false;
-            }
-        },
-        // TASK 6: method that creates complementary DNA strands
-        complementStrand() {
-            return this.dna.map(
-                (base) => {
-                    switch (base) {
-                        case "A": return "T"
-                            break;
-                        case "T": return "A"
-                            break;
+            return percentageC + percentageG >= 60;
+            },
+            // TASK 6: method that creates complementary DNA strands
+            complementStrand() {
+                return this.dna.map(
+                    (base) => {
+                        switch (base) {
+                            case "A": return "T"
+                            case "T": return "A"
                         case "G": return "C"
-                            break;
                         case "C": return "G"
-                            break;
-                        default:
-                            break;
+                        default: throw new Error('Invalid base found: ' + base);
                     }
                 }
-            )
+                )}
+                
+            };
         }
-    };
-}
-
-// TASK 5: creating 30 instances of bacteria DNA
-let pAequorDatabase = [];
-for (let i = 1; i <= 30; i++) {
+            
+            // TASK 5: creating 30 instances of bacteria DNA
+            let pAequorDatabase = [];
+            for (let i = 1; i <= 30; i++) {
     pAequorDatabase.push(pAequorFactory(i, mockUpStrand));
 }
 
-// STILL OPEN! 
+// STILL OPEN!
 // TASK 7: finding highest matching pair from DNA Database
+/**
+this is the hardest problem
+
+The algorithm should be:
+
+let bestA, bestB, bestPercentage. for each dna in the database:
+for each dna2 in the database again (nested loop):
+if dna === dna2, continue
+percentage = calcPercentage(dna, dna2)
+if (percentage > bestPercentage) {
+bestA = dna;
+bestB = dna2;
+bestPercentage = percentage;
+}
+
+ */
 // let matches =
-//     pAequorDatabase.map((DNAStrand, index1) => {
-//         DNAStrand.compareDNA(pAequorDatabase
-//             .filter((DNAStrand, index2) => {
+//     pAequorDatabase.map((dnaStrand, index1) => {
+//         dnaStrand.compareDNA(pAequorDatabase
+//             .filter((dnaStrand, index2) => {
 //                 index2 !== index1
 //             }
 //             ))
@@ -175,9 +182,9 @@ for (let i = 1; i <= 30; i++) {
 // SOME TESTS
 
 console.log(pAequorDatabase);
-let test = pAequorFactory(1, mockUpStrand);
-let test2 = pAequorFactory(2, mockUpStrand);
-let test5 = pAequorFactory(5, mockUpStrand);
+let test = pAequorFactory(1, mockUpStrand());
+let test2 = pAequorFactory(2, mockUpStrand());
+let test5 = pAequorFactory(5, mockUpStrand());
 console.log(test.dna);
 console.log(test.complementStrand());
 console.log(test.compareDNA(test5));
