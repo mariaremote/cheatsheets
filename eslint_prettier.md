@@ -231,6 +231,7 @@ npm install --save-dev eslint prettier eslint-config-prettier
     1. The prettier vscode extension is set to be the default formatter. (VSCode settings -> Search for "Default Formatter" -> Set to Prettier)
     2. Your "Format on Save" setting is on
     3. Your "Auto save" setting is set to "onFocusChange" and _not_ "off" or "afterDelay" (which won't work with formatting).
+    4. Make sure the "Eslint: Debug" mode is enabled
 6. (optional) Add a Prettier config file `.prettierrc` with the following configuration:
 
 ```
