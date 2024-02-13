@@ -103,6 +103,8 @@ git stash pop                           retrieves the stash back to the working 
 git log                                 view commit history
 git reflog                              view direction history
 
+git rm -r --cached [FOLDER/]            removes previously committed folder from git tracking
+
 git checkout [branch_name]              changes into branch
 git checkout -b [branch_name]           creates a new branch and goes into it
 git checkout -b [new_branch] [from remote_branch]       creates new branch locally to fetch remote branch same name
