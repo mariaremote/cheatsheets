@@ -35,9 +35,11 @@ npm install --help                          help for this particular command
 PROGRAM [COMMAND] -h
 top / htop                                  Linux Task Manager
 
-generate SSH Key
+SSH Keys                                    (https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh)
+ls -al ~/.ssh                               checks for existing ssh keys in root directory
 mkdir .ssh/                                 create hidden ssh directory (in user path)
-ssh-keygen.exe                              creates key
+ssh-keygen -t ed25519 -C "your_email@example.com"    
+                                            creates key with your email address as label
 
 ~ Virtual Environments ~
 
