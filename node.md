@@ -18,3 +18,8 @@
 | `os.homedir()`                               | returns the current user's home directory                                                                                                        |
 | `os.hostname()`                              | returns the hostname of the operating system                                                                                                     |
 | `os.uptime()`                                | returns the system uptime in seconds                                                                                                             |
+| `const util = require('util')`               | util module needs to be imported                                                                                                                 |
+| `util.types.isDate(today)`                   | returns boolean check if type is of Date Type                                                                                                    |
+| `util.promisify([some callback function])`   | turns callback functions into promises                                                                                                           |
+
+`
